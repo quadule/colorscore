@@ -7,7 +7,7 @@ class PaletteTest < Test::Unit::TestCase
   end
   
   def test_skydiver_photo_is_mostly_blue
-    score, color = @palette.scores(@histogram).first
+    score, color = @palette.scores(@histogram.scores).first
     assert_equal Color::RGB.from_html('0099cc'), color
   end
 end

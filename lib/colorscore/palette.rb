@@ -10,11 +10,11 @@ module Colorscore
       new DEFAULT.map { |hex| Color::RGB.from_html(hex) }
     end
     
-    def scores(histogram)
+    def scores(histogram_scores)
       scores = map do |palette_color|
         score = 0
         
-        histogram.scores.each_with_index do |item, index|
+        histogram_scores.each_with_index do |item, index|
           color_score, color = *item
           
           color = color.to_hsl.tap { |c| c.s = 0.05 + c.s * (4 - c.l * 2.5) }.to_rgb
