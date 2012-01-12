@@ -29,17 +29,11 @@ module Colorscore
       c2p = Math.sqrt((a2p ** 2) + (b2 ** 2))
       avg_c1p_c2p = (c1p + c2p) / 2.0
 
-      if degrees(Math.atan2(b1,a1p)) >= 0
-        h1p = degrees(Math.atan2(b1,a1p))
-      else
-        h1p = degrees(Math.atan2(b1,a1p)) + 360
-      end
+      h1p = ([b1, a1p] == [0.0, 0.0]) ? 0.0 : degrees(Math.atan2(b1,a1p))
+      h1p += 360 if h1p < 0
 
-      if degrees(Math.atan2(b2,a2p)) >= 0
-        h2p = degrees(Math.atan2(b2,a2p))
-      else
-        h2p = degrees(Math.atan2(b2,a2p)) + 360
-      end
+      h2p = ([b2, a2p] == [0.0, 0.0]) ? 0.0 : degrees(Math.atan2(b2,a2p))
+      h2p += 360 if h2p < 0
 
       if (h1p - h2p).abs > 180
         avg_hp = (h1p + h2p + 360) / 2.0
