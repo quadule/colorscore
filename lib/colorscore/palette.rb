@@ -7,10 +7,14 @@ module Colorscore
                "000000", "999999", "cccccc", "ffffff"]
     
     def self.default
-      new DEFAULT.map { |hex| Color::RGB.from_html(hex) }
+      from_hex DEFAULT
     end
     
-    def scores(histogram_scores)
+    def self.from_hex(hex_values)
+      new hex_values.map { |hex| Color::RGB.from_html(hex) }
+    end
+    
+    def scores(histogram_scores, distance_threshold=0.275)
       scores = map do |palette_color|
         score = 0
         
@@ -19,7 +23,7 @@ module Colorscore
           
           color = color.to_hsl.tap { |c| c.s = 0.05 + c.s * (4 - c.l * 2.5) }.to_rgb
           
-          if (distance = Metrics.distance(palette_color, color)) < 0.275
+          if (distance = Metrics.distance(palette_color, color)) < distance_threshold
             distance_penalty = (1 - distance) ** 4
             score += color_score * distance_penalty
           end 
