@@ -1,7 +1,7 @@
 module Colorscore
   class Histogram
     def initialize(image_path, colors=16, depth=8)
-      output = `convert #{image_path} -resize 400x400 -format %c -dither None -quantize LAB -colors #{colors} -depth #{depth} histogram:info:-`
+      output = `convert #{image_path} -resize 400x400 -format %c -dither None -quantize YIQ -colors #{colors} -depth #{depth} histogram:info:-`
       @lines = output.lines.sort.reverse.map(&:strip).reject(&:empty?)
     end
     
