@@ -4,7 +4,7 @@ class HistogramTest < Test::Unit::TestCase
   def test_color_count_is_correct
     colors = 7
     histogram = Histogram.new("test/fixtures/skydiver.jpg", colors)
-    assert_equal colors, histogram.colors.size
+    assert_operator histogram.colors.size, :<=, colors
   end
 
   def test_transparency_is_ignored

@@ -1,8 +1,9 @@
 module Colorscore
   class Histogram
     def initialize(image_path, colors=16, depth=8)
-      output = `convert #{image_path.inspect} -resize 400x400 -format %c -dither None -quantize YIQ -colors #{colors.to_i} -depth #{depth.to_i} histogram:info:-`
-      @lines = output.lines.sort.reverse.map(&:strip).reject(&:empty?)
+      output = `convert #{image_path.inspect} -resize 400x400 -format %c -dither None -quantize YIQ -colors #{colors.to_i} -depth #{depth.to_i} -alpha deactivate histogram:info:-`
+      @lines = output.lines.map(&:strip).reject(&:empty?).
+        sort_by { |l| l[/(\d+):/, 1].to_i }
     end
 
     # Returns an array of colors in descending order of occurances.
